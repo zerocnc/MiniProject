@@ -1,0 +1,9 @@
+John James 304 Spider Hollow, 78744
+96000
+1200 3
+Susan Smith 111 Lark Lane, 78712
+100000
+900 2
+Claire Clear 123 Shallow Cove
+160000
+2000 4
