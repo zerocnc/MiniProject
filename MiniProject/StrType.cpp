@@ -1,6 +1,14 @@
 #include "StrType.h"
 #include <ctype.h>
 
+StrType::StrType()
+{
+}
+
+StrType::~StrType()
+{
+}
+
 void StrType::MakeEmpty()
 {
 	letters[0] = '\n';
@@ -82,21 +90,6 @@ void GetTillNew(bool skip, char letters[])
 	return;
 }
 
-void StrType::GetString(bool skip, InType charsAllowed)
-{
-	switch (charsAllowed)
-	{
-	case ALPHA_NUM: GetAlphaNum(skip, letters);
-		break;
-	case ALPHA: GetAlpha(skip, letters);
-		break;
-	case NON_WHITE: GetNonWhite(skip, letters);
-		break;
-	case NOT_NEW: GetTillNew(skip, letters);
-		break;
-	}
-}
-
 void GetAlphaNum(bool skip, char letters[])
 {
 	char letter;
@@ -132,11 +125,17 @@ void GetAlphaNum(bool skip, char letters[])
 	}
 }
 
-StrType::StrType()
+void StrType::GetString(bool skip, InType charsAllowed)
 {
-}
-
-
-StrType::~StrType()
-{
+	switch (charsAllowed)
+	{
+	case ALPHA_NUM: GetAlphaNum(skip, letters);
+		break;
+	case ALPHA: GetAlpha(skip, letters);
+		break;
+	case NON_WHITE: GetNonWhite(skip, letters);
+		break;
+	case NOT_NEW: GetTillNew(skip, letters);
+		break;
+	}
 }

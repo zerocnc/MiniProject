@@ -1,5 +1,49 @@
 #include <iostream>
+#include <string>
+
 #include "HouseListing.h"
+
+bool HouseListing::operator<( HouseListing otherOwner) const
+{
+	int result = 0;
+
+	result = std::strcmp(HouseOwner.LastName.c_str(), otherOwner.HouseOwner.LastName.c_str());
+
+	if (result < 0)
+	{
+		return true;
+	}
+	else
+		return false;
+}
+
+bool HouseListing::operator>(HouseListing otherOwner) const
+{
+	int result = 0;
+
+	result = std::strcmp(HouseOwner.LastName.c_str(), otherOwner.HouseOwner.LastName.c_str());
+
+	if (result > 0)
+	{
+		return true;
+	}
+	else
+		return false;
+}
+
+bool HouseListing::operator==(HouseListing otherOwner) const
+{
+	int result = 0;
+
+	result = std::strcmp(HouseOwner.LastName.c_str(), otherOwner.HouseOwner.LastName.c_str());
+
+	if (result == 0)
+	{
+		return true;
+	}
+	else
+		return false;
+}
 
 HouseListing::HouseListing()
 {
@@ -74,5 +118,24 @@ void HouseListing::PrintHouseToScreen() const
 	std::cout << this->HouseOwner.FirstName;
 	std::cout << " ";
 	std::cout << this->HouseOwner.LastName;
+	std::cout << this->HouseOwnerAddress << std::endl;
+	std::cout << "Total Square Feet: " << this->HomeDesription.SQ_Feet << std::endl;
+	std::cout << "Number of Baths: " << this->HomeDesription.BedRoom << std::endl;
+}
 
+void HouseListing::GetNameFromUser()
+{
+	std::cout << std::endl;
+	std::cout << "Enter last name; press return." << std::endl;
+	std::getline(std::cin, this->HouseOwner.LastName);
+
+	std::cout << std::endl;
+	std::cout << "Enter First name; press return." << std::endl;
+	std::getline(std::cin, this->HouseOwner.FirstName);
+}
+
+void HouseListing::PrintNameToScreen() const
+{
+	std::cout << this->HouseOwner.FirstName << " " 
+			  << this->HouseOwner.LastName << std::endl;
 }

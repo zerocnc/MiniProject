@@ -2,7 +2,6 @@
 
 #include <fstream>
 #include "Queue.h"
-// Make your own damn Queue/ADT.
 
 enum OrderType { PRE_ORDER, IN_ORDER, POST_ORDER };
 
@@ -30,10 +29,12 @@ private:
 public:
 	// General Constructors & Deconstructor
 	TreeType();
-	TreeType(const TreeType<ItemType>& orginalTree);
+	TreeType(const TreeType<ItemType>*& orginalTree);
 
 	// TODO: delete tree pointers.
 	~TreeType();
+
+	int NumberOfNodes() const;
 
 	// Operations to tree structure.
 	// Insert-Delete - Recursive
@@ -67,11 +68,11 @@ public:
 private:
 	// Auxiliary Functions
 	void Destory(TreeNode<ItemType>*& tree);
-	void DeleteNode(TreeType<ItemType>*& tree);
+	void DeleteNode(TreeNode<ItemType>*& tree);
 	void Delete(TreeNode<ItemType>*& tree, ItemType item);
 	void Print(TreeNode<ItemType>* tree, std::fstream& outFile);
 
-	int NumberOfNodes() const;
+	int CountNodes(TreeNode<ItemType>*) const;
 
 };
 
@@ -147,13 +148,12 @@ int TreeType<ItemType>::NumberOfNodes() const
 /// <remarks>Function value = (number of elements within tree).</remarks>
 /// </summary>
 template<class ItemType>
-int CountNodes(TreeNode<ItemType>* tree)
+int TreeType<ItemType>::CountNodes(TreeNode<ItemType>* tree) const
 {
 	if (tree == NULL)
 		return 0;
 	else
-		return CountNodes(tree->left) +
-		CountNodes(tree->right) + 1;
+		return CountNodes(tree->left) +	CountNodes(tree->right) + 1;
 }
 
 
@@ -164,7 +164,7 @@ int CountNodes(TreeNode<ItemType>* tree)
 /// </remark>
 /// </summary>
 template<class ItemType>
-void Retrieve(TreeNode<ItemType> tree, ItemType& item, bool& found)
+void Retrieve(TreeNode<ItemType>* tree, ItemType& item, bool& found)
 {
 	if (tree == NULL) {
 		// Item is not found
@@ -175,7 +175,7 @@ void Retrieve(TreeNode<ItemType> tree, ItemType& item, bool& found)
 		// Search left side of the subtree.
 		Retrieve(tree->left, item, found);
 	}
-	else if (item > tree->right)
+	else if (item > tree->info)
 	{
 		// Search right side of the subtree.
 		Retrieve(tree->right, item, found);
@@ -244,7 +244,7 @@ void GetPredecessor(TreeNode<ItemType>* tree, ItemType& data)
 ///				   its logical predecessor and the predecessor's node is deleted.</remarks>
 /// </summary>
 template<class ItemType>
-void TreeType<ItemType>::DeleteNode(TreeType<ItemType>*& tree)
+void TreeType<ItemType>::DeleteNode(TreeNode<ItemType>*& tree)
 {
 	ItemType data;
 	TreeNode<ItemType>* tempPtr;
@@ -292,7 +292,7 @@ void TreeType<ItemType>::Delete(TreeNode<ItemType>*& tree, ItemType item)
 	if (item < tree->info)
 	{
 		// Looks in the left subtree
-		Delete(tree->left, item)
+		Delete(tree->left, item);
 	}
 	else if (item > tree->info)
 	{
@@ -412,9 +412,9 @@ void TreeType<ItemType>::GetNextItem(ItemType& item, OrderType order, bool& fini
 /// <remarks>Precondition: If tree is not empty.</remarks>
 /// </summary>
 template<class ItemType>
-TreeType<ItemType>::TreeType(const TreeType<ItemType>& originalTree)
+TreeType<ItemType>::TreeType(const TreeType<ItemType>*& originalTree)
 {
-	CopyTree(root, orginalTree);
+	CopyTree(root, originalTree);
 }
 
 template<class ItemType>

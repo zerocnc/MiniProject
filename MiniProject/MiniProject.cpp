@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+
+#include "StrType.h"
 #include "HouseListing.h"
 #include "UnsortedLinkedList.h"
 #include "BinarySearchTree.h"
@@ -10,6 +12,8 @@ enum CommandType {ADD, DELETE, PRINT_ONE, PRINT_ALL, QUIT };
 void FileToList(UnsortedType<HouseListing>&, std::ifstream&);
 
 void ListToFile(TreeType<HouseListing>, std::ofstream&);
+
+void ConvertListToBST(UnsortedType<HouseListing>&, TreeType<HouseListing>&);
 
 void AddHouse(TreeType<HouseListing>&);
 
@@ -28,10 +32,10 @@ int main()
 	CommandType command;
 	// List
 	UnsortedType<HouseListing> houseList;
-
+	TreeType<HouseListing> houseBST;
 
 	FileToList(houseList, masterIn);
-	//GetCommand(command);
+	ConvertListToBST(houseList, houseBST);
 
 	HouseListing myItem;
 
@@ -39,15 +43,25 @@ int main()
 
 	int numberOfPeople = houseList.LengthIs();
 
-	// Prints entire tree.
-	for (int ndx = 0; ndx < numberOfPeople; ndx++)
+	GetCommand(command);
+
+	while (command != QUIT)
 	{
-		houseList.GetNextItem(myItem);
-		std::cout << myItem << std::endl;
+		switch (command)
+		{
+		case ADD:	AddHouse(houseBST);
+			break;
+		case DELETE: DeleteHouse(houseBST);
+			break;
+		case PRINT_ONE: PrintHouse(houseBST);
+			break;
+		case PRINT_ALL:PrintOwners(houseBST);
+			break;
+		}
+		GetCommand(command);
 	}
 
-
-	std::cout << "Hello world!";
+	return 0;
 }
 
 void FileToList(UnsortedType<HouseListing>& myListing, std::ifstream& MasterIn) {
@@ -83,12 +97,13 @@ void ListToFile(UnsortedType<HouseListing> houseList, std::ofstream& masterOut)
 	masterOut.close();
 }
 
-void AddHouse(UnsortedType<HouseListing>& houseList)
+void AddHouse(TreeType<HouseListing>& houseList)
 {
 	bool found;
 	HouseListing item;
 
 	item.GetFromUser();
+
 	houseList.RetrieveItem(item, found);
 
 	if (!found)
@@ -100,7 +115,7 @@ void AddHouse(UnsortedType<HouseListing>& houseList)
 		std::cout << "Duplicate name: Operation Aborted" << std::endl;
 }
 
-void DeleteHouse(UnsortedType<HouseListing>& houseList)
+void DeleteHouse(TreeType<HouseListing>& houseList)
 {
 	bool found;
 	HouseListing item;
@@ -119,13 +134,15 @@ void DeleteHouse(UnsortedType<HouseListing>& houseList)
 	return;
 }
 
-void PrintHouse(UnsortedType<HouseListing> houseList)
+void PrintHouse(TreeType<HouseListing>& houseBST)
 {
 	bool found;
 	HouseListing item;
 
 	item.GetNameFromUser();
-	houseList.RetrieveItem(item, found);
+	houseBST.RetrieveItem(item, found);
+
+	std::cout << std::endl << "Retrieving Record" << std::endl;
 
 	if (found)
 		item.PrintHouseToScreen();
@@ -135,19 +152,14 @@ void PrintHouse(UnsortedType<HouseListing> houseList)
 	return;
 }
 
-void PrintOwners(UnsortedType<HouseListing> houseList)
+void PrintOwners(TreeType<HouseListing> houseTree)
 {
 	HouseListing item;
 	int length = 0;
 
-	houseList.ResetList();
-	length = houseList.LengthIs();
-
-	for (int ndx = 0; ndx < length; ndx++)
-	{
-		houseList.GetNextItem(item);
-		item.PrintNameToScreen();
-	}
+	
+	length = houseTree.NumberOfNodes();
+	std::cout << "Number of people on List: " << length << std::endl;
 
 	std::cout << "Operation Complete." << std::endl;
 }
@@ -166,6 +178,7 @@ void GetCommand(CommandType& command)
 
 	char letter;
 	std::cin >> letter;
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
 	bool ok = false;
 	while (!ok)
@@ -186,8 +199,25 @@ void GetCommand(CommandType& command)
 		default:
 			std::cout << "Letter entered is not one of the specified uppercase commands. " << std::endl;
 			std::cout << "Reenter and press return." << std::endl;
+
+			std::cin >> letter;
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			ok = false;
 			break;
 		}
+	}
+}
+
+void ConvertListToBST(UnsortedType<HouseListing>& homeListing, TreeType<HouseListing>& homeBST)
+{
+	int length = homeListing.LengthIs();
+	HouseListing record;
+	
+	homeListing.ResetList();
+
+	for (int ndx = 0; ndx < length; ndx++)
+	{
+		homeListing.GetNextItem(record);
+		homeBST.InsertItem(record);
 	}
 }

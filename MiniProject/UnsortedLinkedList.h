@@ -149,6 +149,7 @@ void UnsortedType<ItemType>::RetrieveItem(ItemType& item, bool& found)
 			moreToSearch = (location != NULL);
 		}
 	}
+	return;
 }
 
 template <class ItemType>
@@ -178,4 +179,30 @@ void UnsortedType<ItemType>::GetNextItem(ItemType& item)
 		currentPos = currentPos->next;
 
 	item = currentPos->info;
+}
+
+template <class ItemType>
+void UnsortedType<ItemType>::DeleteItem(ItemType& item)
+{
+	NodeType<ItemType>* location = listData;
+	NodeType<ItemType>* tempLocation;
+
+	// Locate the node to be deleted
+	if (item == listData->info)
+	{
+		tempLocation = location;
+		listData = listData->next;	// Delete the first node
+	}
+	else
+	{
+		while (!(item == (location->next)->info))
+			location = location->next;
+
+		// Delete node at location->next
+		tempLocation = location->next;
+		location->next(location->next)->next;
+	}
+
+	delete tempLocation;
+	length--;
 }
