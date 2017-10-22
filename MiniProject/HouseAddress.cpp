@@ -16,7 +16,6 @@ HouseAddress::~HouseAddress()
 std::istream& operator>>(std::istream& is, HouseAddress& item)
 {
 	std::getline(is, item.HouseHouseAddress);
-	//is >> item.HouseHouseAddress;
 
 	return is;
 }

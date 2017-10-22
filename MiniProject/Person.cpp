@@ -15,8 +15,8 @@ Person::~Person()
 
 std::istream& operator>>(std::istream& is, Person& item)
 {
-	is >> item.FirstName;
-	is >> item.LastName;
+	is >> item.FirstName >> item.LastName;
+	is.ignore();
 
 	return is;
 }

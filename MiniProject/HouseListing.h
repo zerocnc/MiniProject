@@ -19,6 +19,14 @@ public:
 	HouseListing();
 	~HouseListing();
 
+	void GetFromFile(std::ifstream&);
+	void WriteToFile(std::ofstream&) const;
+	void GetFromUser();
+	void PrintHouseToScreen() const;
+	void GetNameFromUser();
+	void PrintNameToScreen() const;
+	// Overload <,>,== later for BST usage
+
 private:
 
 };
