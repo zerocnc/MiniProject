@@ -8,30 +8,34 @@
 class HouseListing
 {
 public:
+	Person HouseOwner;
+	StreetAddress HouseAddress;
+	float HousePrice;
+	HouseDescription HomeDesription;
 
 	friend std::istream& operator>>(std::istream& is, HouseListing& item);
 	friend std::ostream& operator<<(std::ostream& os, HouseListing item);
 
-	bool operator<(HouseListing HomeOwner) const;
-	bool operator>(HouseListing HomeOwner) const;
-	bool operator==(HouseListing HomeOwner) const;
-	// Create a seprate = for houselisting, create OWN header for it.
-
-	HouseListing();
-	~HouseListing();
-
-	void GetFromFile(std::ifstream&);
-	void WriteToFile(std::ofstream&) const;
-	void GetFromUser();
-	void PrintHouseToScreen() const;
-	void GetKeyNameOnlyFromUser();
-	void PrintNameToScreen() const;
-	// Overload <,>,== later for BST usage
-
 private:
-	Person HouseOwner;
-	HouseAddress HouseOwnerAddress;
-	float HousePrice;
-	HouseDescription HomeDesription;
-	
+
 };
+
+std::istream& operator>>(std::istream& is, HouseListing& item)
+{
+	is >> item.HouseOwner;
+	is >> item.HouseAddress;
+	is >> item.HousePrice;
+	is >> item.HomeDesription;
+
+	return is;
+}
+
+std::ostream& operator<<(std::ostream& os, HouseListing item){
+	
+	os << item.HouseOwner;
+	os << item.HouseAddress;
+	os << item.HousePrice << " ";
+	os << item.HomeDesription;
+
+	return os;
+}

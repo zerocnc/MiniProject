@@ -11,9 +11,21 @@ public:
 	friend std::istream& operator>>(std::istream& is, HouseDescription& item);
 	friend std::ostream& operator<<(std::ostream& os, HouseDescription item);
 
-	HouseDescription();
-	~HouseDescription();
-
 private:
 };
 
+std::istream& operator>>(std::istream& is, HouseDescription& item)
+{
+	is >> item.SQ_Feet;
+	is >> item.BedRoom;
+
+	return is;
+}
+
+std::ostream& operator<<(std::ostream& os, HouseDescription item)
+{
+	os << item.SQ_Feet;
+	os << item.BedRoom;
+
+	return os;
+}
