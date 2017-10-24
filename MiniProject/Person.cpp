@@ -23,8 +23,8 @@ std::istream& operator>>(std::istream& is, Person& item)
 
 std::ostream& operator<<(std::ostream& os, Person item)
 {
-	os << item.FirstName << " ";
-	os << item.LastName << "\n";
+	os << item.FirstName << ' ';
+	os << item.LastName << '\n';
 
 	return os;
 }

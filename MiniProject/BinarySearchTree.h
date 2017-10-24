@@ -29,7 +29,7 @@ private:
 public:
 	// General Constructors & Deconstructor
 	TreeType();
-	TreeType(const TreeType<ItemType>*& orginalTree);
+	TreeType(const TreeType<ItemType>*& originalTree);
 
 	// TODO: delete tree pointers.
 	~TreeType();
@@ -49,21 +49,12 @@ public:
 	void GetNextItem(ItemType& item, OrderType order, bool& finished);
 	void CopyTree(TreeNode<ItemType>*& copy, const TreeNode<ItemType>* orginalTree);
 
-	// Iterative FindNode - Non recursive
-	/*
-	void FindNode(TreeNode<ItemType>* tree, ItemType item, TreeNode<ItemType>*& nodePtr, TreeNode<ItemType>*& parentPtr);
-	void InsertItem(ItemType& item);
-	void DeleteItem(ItemType& item);*/
-
-
 	void operator=(const TreeType<ItemType>& orginalTree);
 
 	// Visit Trees in PRE_ORDER, IN_ORDER, POST_ORDER
 	void PreOrder(TreeNode<ItemType>* tree, Queue<ItemType>& preQue);
 	void InOrder(TreeNode<ItemType>* tree, Queue<ItemType>& inQue);
 	void PostOrder(TreeNode<ItemType>* tree, Queue<ItemType>& postQue);
-	// void ResetTree(OrderType order);
-	//void GetNextItem(ItemType& item, OrderType order, bool& finished);
 
 private:
 	// Auxiliary Functions
@@ -82,7 +73,7 @@ private:
 template<class ItemType>
 TreeType<ItemType>::TreeType()
 {
-	root = NULL;
+	root = nullptr;
 }
 
 /// <summary>Default deconstructor.
@@ -100,7 +91,7 @@ TreeType<ItemType>::~TreeType()
 template<class ItemType>
 void TreeType<ItemType>::Destory(TreeNode<ItemType>*& tree)
 {
-	if (tree != NULL)
+	if (tree != nullptr)
 	{
 		Destory(tree->left);
 		Destory(tree->right);
@@ -114,6 +105,9 @@ void TreeType<ItemType>::Destory(TreeNode<ItemType>*& tree)
 template<class ItemType>
 void TreeType<ItemType>::MakeEmpty()
 {
+	Destory(root);
+	root = nullptr;
+
 	return;
 }
 
@@ -150,7 +144,7 @@ int TreeType<ItemType>::NumberOfNodes() const
 template<class ItemType>
 int TreeType<ItemType>::CountNodes(TreeNode<ItemType>* tree) const
 {
-	if (tree == NULL)
+	if (tree == nullptr)
 		return 0;
 	else
 		return CountNodes(tree->left) +	CountNodes(tree->right) + 1;
@@ -166,7 +160,7 @@ int TreeType<ItemType>::CountNodes(TreeNode<ItemType>* tree) const
 template<class ItemType>
 void Retrieve(TreeNode<ItemType>* tree, ItemType& item, bool& found)
 {
-	if (tree == NULL) {
+	if (tree == nullptr) {
 		// Item is not found
 		found = false;
 	}
@@ -186,6 +180,7 @@ void Retrieve(TreeNode<ItemType>* tree, ItemType& item, bool& found)
 		item = tree->info;
 		found = true;
 	}
+	return;
 }
 
 /*
@@ -250,12 +245,12 @@ void TreeType<ItemType>::DeleteNode(TreeNode<ItemType>*& tree)
 	TreeNode<ItemType>* tempPtr;
 
 	tempPtr = tree;
-	if (tree->left == NULL)
+	if (tree->left == nullptr)
 	{
 		tree = tree->right;
 		delete tempPtr;
 	}
-	else if (tree->right == NULL)
+	else if (tree->right == nullptr)
 	{
 		tree = tree->left;
 		delete tempPtr;
@@ -348,11 +343,11 @@ void TreeType<ItemType>::PrintTree(std::fstream& outFile)
 template<class ItemType>
 void TreeType<ItemType>::Print(TreeNode<ItemType>* tree, std::fstream& outFile)
 {
-	if (tree != NULL)
+	if (tree != nullptr)
 	{
-		Print(tree->left, outFile);
-		outFile << tree->info;
-		// std::cout << tree->info;
+		// Print(tree->left, outFile);
+		// outFile << tree->info;
+		std::cout << tree->info;
 		Print(tree->right, outFile);
 	}
 }
@@ -418,7 +413,7 @@ TreeType<ItemType>::TreeType(const TreeType<ItemType>*& originalTree)
 }
 
 template<class ItemType>
-void TreeType<ItemType>::operator=(const TreeType<ItemType>& orginalTree)
+void TreeType<ItemType>::operator=(const TreeType<ItemType>& originalTree)
 {
 	if (&originalTree == this)
 	{
@@ -435,8 +430,8 @@ void TreeType<ItemType>::operator=(const TreeType<ItemType>& orginalTree)
 template<class ItemType>
 void TreeType<ItemType>::CopyTree(TreeNode<ItemType>*& copy, const TreeNode<ItemType>* orginalTree)
 {
-	if (orginalTree == NULL)
-		copy = NULL;
+	if (orginalTree == nullptr)
+		copy = nullptr;
 	else
 	{
 		copy = new TreeNode<ItemType>;
@@ -449,7 +444,7 @@ void TreeType<ItemType>::CopyTree(TreeNode<ItemType>*& copy, const TreeNode<Item
 template<class ItemType>
 void TreeType<ItemType>::PreOrder(TreeNode<ItemType>* tree, Queue<ItemType>& preQue)
 {
-	if (tree != NULL)
+	if (tree != nullptr)
 	{
 		preQue.Enqueue(tree->info);
 		PreOrder(tree->left, preQue);
@@ -460,7 +455,7 @@ void TreeType<ItemType>::PreOrder(TreeNode<ItemType>* tree, Queue<ItemType>& pre
 template<class ItemType>
 void TreeType<ItemType>::InOrder(TreeNode<ItemType>* tree, Queue<ItemType>& inQue)
 {
-	if (tree != NULL)
+	if (tree != nullptr)
 	{
 		InOrder(tree->left, inQue);
 		inQue.Enqueue(tree->info);
@@ -471,103 +466,10 @@ void TreeType<ItemType>::InOrder(TreeNode<ItemType>* tree, Queue<ItemType>& inQu
 template<class ItemType>
 void TreeType<ItemType>::PostOrder(TreeNode<ItemType>* tree, Queue<ItemType>& postQue)
 {
-	if (tree != NULL)
+	if (tree != nullptr)
 	{
 		PostOrder(tree->left, postQue);
 		PostOrder(tree->right, postQue);
 		postQue.Enqueue(tree->info);
 	}
 }
-/*
-template<class ItemType>
-void TreeType<ItemType>::ResetTree(OrderType order)
-{
-switch (order)
-{
-case PRE_ORDER : PreOrder(root, preQue);
-break;
-case IN_ORDER :	InOrder(root, inQue);
-break;
-case POST_ORDER: PostOrder(root, postQue);
-break;
-}
-}
-template<class ItemType>
-void TreeType<ItemType>::GetNextItem(ItemType& item, OrderType order, bool& finished)
-{
-finished = false;
-switch (order)
-{
-case PRE_ORDER: preQue.pop(item);
-if (preQue.empty())
-finished = true;
-break;
-case IN_ORDER: preQue.pop(item);
-if (inQue.empty())
-finished = true;
-break;
-case POST_ORDER: postQue.pop(item);
-in(postQue.empty())
-finished = true;
-break;
-}
-}
-/*
-/// <summary>Searches for a node whose key matches item's key.</summary>
-/// <remarks>If a node is not found, the nodePtr = set to NULL indicated we haven't found a place to insert said key.</remarks>
-template<class ItemType>
-void TreeType<ItemType>::FindNode(TreeNode<ItemType>* tree, ItemType item, TreeNode<ItemType>*& nodePtr, TreeNode<ItemType>*& parentPtr)
-{
-nodePtr = tree;
-parentPtr = NULL;
-bool found = false;
-while (nodePtr != NULL && !found)
-{
-if (item < nodePtr->info)
-{
-parentPtr = nodePtr;
-nodePtr = nodePtr->left;
-}
-else if (item > nodePtr->info)
-{
-parentPtr = nodePtr;
-nodePtr = nodePtr->right;
-}
-else
-found = true;
-}
-}
-template<class ItemType>
-void TreeType<ItemType>::InsertItem(ItemType& item)
-{
-TreeNode<ItemType>* newNode;
-TreeNode<ItemType>* nodePtr;
-TreeNode<ItemType>* parentPtr;
-newNode = new TreeNode<ItemType>;
-newNode->info = item;
-newNode->left = NULL;
-newNode->right = NULL;
-FindNode(root, item, nodePtr, parentNode);
-// Insert as root
-if (parentPtr == NULL)
-root = newNode;
-else if (item < parentPtr->info)
-parentPtr->left = newNode;
-else
-parentPtr->right = newNode;
-}
-template<class ItemType>
-void TreeType<ItemType>::DeleteItem(ItemType& item)
-{
-TreeNode<ItemType>* nodePtr;
-TreeNode<ItemType>* parentPtr;
-FindNode(root, item, nodePtr, parentPtr);
-if (nodePtr == root)
-DeleteNode(root)
-{
-if (parent->left == nodePtr)
-DeleteNode(parentPtr->left);
-else
-DeleteNode(parentPtr->right);
-}
-}*/

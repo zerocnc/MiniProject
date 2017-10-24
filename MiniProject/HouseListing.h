@@ -15,6 +15,7 @@ public:
 	bool operator<(HouseListing HomeOwner) const;
 	bool operator>(HouseListing HomeOwner) const;
 	bool operator==(HouseListing HomeOwner) const;
+	// Create a seprate = for houselisting, create OWN header for it.
 
 	HouseListing();
 	~HouseListing();
@@ -23,7 +24,7 @@ public:
 	void WriteToFile(std::ofstream&) const;
 	void GetFromUser();
 	void PrintHouseToScreen() const;
-	void GetNameFromUser();
+	void GetKeyNameOnlyFromUser();
 	void PrintNameToScreen() const;
 	// Overload <,>,== later for BST usage
 

@@ -120,7 +120,7 @@ void DeleteHouse(TreeType<HouseListing>& houseList)
 	bool found;
 	HouseListing item;
 
-	item.GetFromUser();
+	item.GetKeyNameOnlyFromUser();
 	houseList.RetrieveItem(item, found);
 
 	if (found)
@@ -139,7 +139,7 @@ void PrintHouse(TreeType<HouseListing>& houseBST)
 	bool found;
 	HouseListing item;
 
-	item.GetNameFromUser();
+	item.GetKeyNameOnlyFromUser();
 	houseBST.RetrieveItem(item, found);
 
 	std::cout << std::endl << "Retrieving Record" << std::endl;
@@ -167,10 +167,10 @@ void PrintOwners(TreeType<HouseListing> houseTree)
 void GetCommand(CommandType& command)
 {
 	// Prompt User
-	std::cout << "Operations are listed below."
+	std::cout << "Operations are listed below. \n"
 		<< "Enter the appropriate uppercase letter and "
 		<< "press return." << std::endl;
-	std::cout << "A : Add a hosue to thei list of hosues." << std::endl;
+	std::cout << "A : Add a house to the list of hosues." << std::endl;
 	std::cout << "D : Delete a specific owner's house." << std::endl;
 	std::cout << "P : Print the information about an owner's house." << std::endl;
 	std::cout << "L : Print all the names on the screen." << std::endl;
@@ -184,6 +184,8 @@ void GetCommand(CommandType& command)
 	while (!ok)
 	{
 		ok = true;
+		letter = toupper(letter);
+
 		switch (letter)
 		{
 		case 'A': command = ADD;

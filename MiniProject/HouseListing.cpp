@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <iomanip>
 
 #include "HouseListing.h"
 
@@ -115,15 +116,15 @@ void HouseListing::GetFromUser()
 
 void HouseListing::PrintHouseToScreen() const
 {
-	std::cout << this->HouseOwner.FirstName;
-	std::cout << " ";
-	std::cout << this->HouseOwner.LastName;
-	std::cout << this->HouseOwnerAddress << std::endl;
+	std::cout << this->HouseOwner.FirstName << ' ';
+	std::cout << this->HouseOwner.LastName << '\n';
+	std::cout << this->HouseOwnerAddress;
+	std::cout << "Price: $" << std::fixed << std::setprecision(2) << std::setfill('0') << this->HousePrice << std::endl;
 	std::cout << "Total Square Feet: " << this->HomeDesription.SQ_Feet << std::endl;
 	std::cout << "Number of Baths: " << this->HomeDesription.BedRoom << std::endl;
 }
 
-void HouseListing::GetNameFromUser()
+void HouseListing::GetKeyNameOnlyFromUser()
 {
 	std::cout << std::endl;
 	std::cout << "Enter last name; press return." << std::endl;
