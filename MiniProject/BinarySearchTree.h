@@ -44,7 +44,9 @@ public:
 	void RetrieveItem(ItemType& item, bool& found);
 	void InsertItem(ItemType item);
 	void DeleteItem(ItemType item);
+	void Print(TreeNode<ItemType>*, std::ofstream);
 	void PrintTree(std::fstream& outFile);
+	void PrintTreeToScreen();
 	void ResetTree(OrderType order);
 	void GetNextItem(ItemType& item, OrderType order, bool& finished);
 	void CopyTree(TreeNode<ItemType>*& copy, const TreeNode<ItemType>* orginalTree);
@@ -61,7 +63,7 @@ private:
 	void Destory(TreeNode<ItemType>*& tree);
 	void DeleteNode(TreeNode<ItemType>*& tree);
 	void Delete(TreeNode<ItemType>*& tree, ItemType item);
-	void Print(TreeNode<ItemType>* tree, std::fstream& outFile);
+	void PrintTreeDisplay(TreeNode<ItemType>* tree);
 
 	int CountNodes(TreeNode<ItemType>*) const;
 
@@ -91,11 +93,14 @@ TreeType<ItemType>::~TreeType()
 template<class ItemType>
 void TreeType<ItemType>::Destory(TreeNode<ItemType>*& tree)
 {
+
 	if (tree != nullptr)
 	{
 		Destory(tree->left);
 		Destory(tree->right);
+
 		delete tree;
+		tree = nullptr;
 	}
 }
 
@@ -117,7 +122,10 @@ void TreeType<ItemType>::MakeEmpty()
 template<class ItemType>
 bool TreeType<ItemType>::IsEmpty()
 {
-	return true;
+	if (root != nullptr)
+		return false;
+	else
+		return true;
 }
 
 /// <summary>Determines if the tree is full.
@@ -126,7 +134,19 @@ bool TreeType<ItemType>::IsEmpty()
 template<class ItemType>
 bool TreeType<ItemType>::IsFull()
 {
-	return;
+	NodeType<ItemType>* ptr;
+	ptr = new NodeType<ItemType>;
+
+	if (ptr == nullptr)
+	{
+		return true;
+	}
+	else
+	{
+		delete ptr;
+		return false;
+	}
+	
 }
 
 /// <summary>Determines how many elements are in the tree.
@@ -198,12 +218,12 @@ void TreeType<ItemType>::RetrieveItem(ItemType& item, bool& found)
 template<class ItemType>
 void Insert(TreeNode<ItemType>*& tree, ItemType item)
 {
-	if (tree == NULL)
+	if (tree == nullptr)
 	{
 		// Insertion place found.
 		tree = new TreeNode<ItemType>;
-		tree->right = NULL;
-		tree->left = NULL;
+		tree->right = nullptr;
+		tree->left = nullptr;
 		tree->info = item;
 	}
 	else if (item < tree->info)
@@ -211,7 +231,7 @@ void Insert(TreeNode<ItemType>*& tree, ItemType item)
 		// Insert in left subtree
 		Insert(tree->left, item);
 	}
-	else
+	else if ( item > tree->info )
 	{
 		// Insert in right subtree
 		Insert(tree->right, item);
@@ -225,7 +245,7 @@ void Insert(TreeNode<ItemType>*& tree, ItemType item)
 template<class ItemType>
 void GetPredecessor(TreeNode<ItemType>* tree, ItemType& data)
 {
-	while (tree->right != NULL)
+	while (tree->right != nullptr)
 	{
 		tree = tree->right;
 	}
@@ -249,11 +269,13 @@ void TreeType<ItemType>::DeleteNode(TreeNode<ItemType>*& tree)
 	{
 		tree = tree->right;
 		delete tempPtr;
+		tempPtr = nullptr;
 	}
 	else if (tree->right == nullptr)
 	{
 		tree = tree->left;
 		delete tempPtr;
+		tempPtr = nullptr;
 	}
 	else
 	{
@@ -319,7 +341,7 @@ void TreeType<ItemType>::DeleteItem(ItemType item)
 template<class ItemType>
 void Print(TreeNode<ItemType>* tree, std::ofstream& outFile)
 {
-	if (tree != NULL)
+	if (tree != nullptr)
 	{
 		// Prints left side first.
 		Print(tree->left, outFile);
@@ -341,14 +363,39 @@ void TreeType<ItemType>::PrintTree(std::fstream& outFile)
 }
 
 template<class ItemType>
-void TreeType<ItemType>::Print(TreeNode<ItemType>* tree, std::fstream& outFile)
+void TreeType<ItemType>::PrintTreeToScreen()
+{
+	PrintTreeDisplay(root);
+	return;
+}
+
+template<class ItemType>
+void TreeType<ItemType>::PrintTreeDisplay(TreeNode<ItemType>* tree) 
 {
 	if (tree != nullptr)
 	{
-		// Print(tree->left, outFile);
-		// outFile << tree->info;
+		PrintTreeDisplay(tree->left);
+
+		// Display Current Node 
 		std::cout << tree->info;
-		Print(tree->right, outFile);
+
+		std::cout << std::endl;
+		std::cout << std::endl;
+
+		PrintTreeDisplay(tree->right);
+	}
+}
+
+template<class ItemType>
+void TreeType<ItemType>::Print(TreeNode<ItemType>* tree, std::ofstream outFile)
+{
+	if (tree != nullptr)
+	{
+		//outFile << tree->info;
+		
+		// std::cout << tree->info;
+		// Print(tree->right, outFile);
+
 	}
 }
 
@@ -378,7 +425,6 @@ void TreeType<ItemType>::ResetTree(OrderType order)
 ///			 finished = (current psoition is last)
 ///			 item is copy of element at current position</remarks>
 /// </summary>
-// Make your own Stack & queue ADT
 template<class ItemType>
 void TreeType<ItemType>::GetNextItem(ItemType& item, OrderType order, bool& finished)
 {

@@ -1,3 +1,4 @@
+#include <iostream>
 #include "HouseDescription.h"
 
 HouseDescription::HouseDescription() {
@@ -12,14 +13,16 @@ HouseDescription::~HouseDescription()
 
 std::istream& operator>>(std::istream& is, HouseDescription& item)
 {
-	is >> item.SQ_Feet >> item.BedRoom;
+	is >> item.SQ_Feet;
+	is >> item.BedRoom;
 
 	return is;
 }
 
 std::ostream& operator<<(std::ostream& os, HouseDescription item)
 {
-	os << item.SQ_Feet << item.BedRoom;
+	os << "Sqaure Feet:" << item.SQ_Feet << "sq. ft." << std::endl;
+	os <<"Bedrooms: " << item.BedRoom;
 
 	return os;
 }

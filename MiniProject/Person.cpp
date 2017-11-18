@@ -2,8 +2,8 @@
 
 Person::Person()
 {
-	FirstName = "";
-	LastName = "";
+	FirstName.clear();
+	LastName.clear();
 
 	return;
 }

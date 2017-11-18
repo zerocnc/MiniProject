@@ -2,7 +2,7 @@
 
 HouseAddress::HouseAddress()
 {
-	HouseHouseAddress = "";
+	HouseHouseAddress.clear();
 
 	return;
 }
@@ -22,7 +22,7 @@ std::istream& operator>>(std::istream& is, HouseAddress& item)
 
 std::ostream& operator<<(std::ostream& os, HouseAddress item)
 {
-	os << item.HouseHouseAddress << "\n";
+	os << item.HouseHouseAddress << '\n';
 
 	return os;
 }

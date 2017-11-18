@@ -15,7 +15,6 @@ public:
 	bool operator<(HouseListing HomeOwner) const;
 	bool operator>(HouseListing HomeOwner) const;
 	bool operator==(HouseListing HomeOwner) const;
-	// Create a seprate = for houselisting, create OWN header for it.
 
 	HouseListing();
 	~HouseListing();

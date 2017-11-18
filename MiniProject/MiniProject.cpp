@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 
-#include "StrType.h"
 #include "HouseListing.h"
 #include "UnsortedLinkedList.h"
 #include "BinarySearchTree.h"
@@ -11,7 +10,7 @@ enum CommandType {ADD, DELETE, PRINT_ONE, PRINT_ALL, QUIT };
 
 void FileToList(UnsortedType<HouseListing>&, std::ifstream&);
 
-void ListToFile(TreeType<HouseListing>, std::ofstream&);
+void BSTToFile(TreeType<HouseListing>);
 
 void ConvertListToBST(UnsortedType<HouseListing>&, TreeType<HouseListing>&);
 
@@ -21,7 +20,7 @@ void DeleteHouse(TreeType<HouseListing>&);
 
 void PrintHouse(TreeType<HouseListing>&);
 
-void PrintOwners(TreeType<HouseListing>);
+void PrintOwners(TreeType<HouseListing>&);
 
 void GetCommand(CommandType&);
 
@@ -30,18 +29,17 @@ int main()
 	std::ifstream masterIn;
 	std::ofstream masterOut;
 	CommandType command;
+
 	// List
 	UnsortedType<HouseListing> houseList;
+	// BST
 	TreeType<HouseListing> houseBST;
+
 
 	FileToList(houseList, masterIn);
 	ConvertListToBST(houseList, houseBST);
 
 	HouseListing myItem;
-
-	houseList.ResetList();
-
-	int numberOfPeople = houseList.LengthIs();
 
 	GetCommand(command);
 
@@ -55,11 +53,16 @@ int main()
 			break;
 		case PRINT_ONE: PrintHouse(houseBST);
 			break;
-		case PRINT_ALL:PrintOwners(houseBST);
+		case PRINT_ALL: PrintOwners(houseBST);
+			break;
+		default:
+			std::cout << "Invalid command option: enum! CONTACT SUPPORT!" << std::endl;
 			break;
 		}
 		GetCommand(command);
 	}
+
+	//BSTToFile(houseBST);
 
 	return 0;
 }
@@ -80,19 +83,19 @@ void FileToList(UnsortedType<HouseListing>& myListing, std::ifstream& MasterIn) 
 	return;
 }
 
-void ListToFile(UnsortedType<HouseListing> houseList, std::ofstream& masterOut)
+void BSTToFile(TreeType<HouseListing> houseBST)
 {
 	HouseListing item;
+	std::ofstream masterOut;
+
 	int length;
+	bool finished = true;
+	HouseListing record;
 
 	masterOut.open("masterOut.mf");
-	houseList.ResetList();
-	length = houseList.LengthIs();
-	for (int ndx = 0; ndx < length; ndx++)
-	{
-		houseList.GetNextItem(item);
-		masterOut << item;
-	}
+	
+	length = houseBST.NumberOfNodes();
+
 
 	masterOut.close();
 }
@@ -142,25 +145,28 @@ void PrintHouse(TreeType<HouseListing>& houseBST)
 	item.GetKeyNameOnlyFromUser();
 	houseBST.RetrieveItem(item, found);
 
-	std::cout << std::endl << "Retrieving Record" << std::endl;
+	std::cout << std::endl;
+	std::cout << "Retrieving Record" << std::endl;
 
 	if (found)
 		item.PrintHouseToScreen();
 	else
-		std::cout << "Owner not in list." << std::endl;
+		std::cout << "Owner not in list.";
+
+	std::cout << std::endl;
 
 	return;
 }
 
-void PrintOwners(TreeType<HouseListing> houseTree)
+void PrintOwners(TreeType<HouseListing>& houseTree)
 {
-	HouseListing item;
 	int length = 0;
 
-	
 	length = houseTree.NumberOfNodes();
-	std::cout << "Number of people on List: " << length << std::endl;
+	std::cout << "Number of people on List: " << length << std::endl << std::endl;
+	houseTree.PrintTreeToScreen();
 
+	std::cout << std::endl;
 	std::cout << "Operation Complete." << std::endl;
 }
 
