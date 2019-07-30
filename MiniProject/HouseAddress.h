@@ -3,15 +3,27 @@
 #include <fstream>
 #include <string>
 
-class HouseAddress {
+class StreetAddress {
 public:
-	std::string HouseHouseAddress;
+	std::string HouseStreetAddress;
 
-	friend std::istream& operator>>(std::istream& is, HouseAddress& item);
-	friend std::ostream& operator<<(std::ostream& os, HouseAddress item);
-
-	HouseAddress();
-	~HouseAddress();
+	friend std::istream& operator>>(std::istream& is, StreetAddress& item);
+	friend std::ostream& operator<<(std::ostream& os, StreetAddress item);
 
 private:
 };
+
+std::istream& operator>>(std::istream& is, StreetAddress& item)
+{
+	std::getline(is, item.HouseStreetAddress);
+	//is >> item.HouseStreetAddress;
+
+	return is;
+}
+
+std::ostream& operator<<(std::ostream& os, StreetAddress item)
+{
+	os << item.HouseStreetAddress << "\n";
+	
+	return os;
+}

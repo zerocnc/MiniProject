@@ -10,3 +10,15 @@ Claire Clear
 123 Shallow Cove
 160000
 2000 4
+Richard Neal
+3604 Beachler
+456000
+1250 3
+Rick Sanchez
+320 Spooner St.
+245000
+230 3
+Jerry Smith
+999 Louis Ct.
+124000
+900 2
