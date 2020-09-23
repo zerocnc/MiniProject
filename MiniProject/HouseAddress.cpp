@@ -1,8 +1,11 @@
-#include "HouseAddress.h"
+#pragma once
+
+#include "HomeAddress.h"
+#include <string>
 
 HouseAddress::HouseAddress()
 {
-	HouseHouseAddress.clear();
+	StreetAddress.clear();
 
 	return;
 }
@@ -15,14 +18,14 @@ HouseAddress::~HouseAddress()
 
 std::istream& operator>>(std::istream& is, HouseAddress& item)
 {
-	std::getline(is, item.HouseHouseAddress);
+	std::getline(is, item.StreetAddress);
 
 	return is;
 }
 
 std::ostream& operator<<(std::ostream& os, HouseAddress item)
 {
-	os << item.HouseHouseAddress << '\n';
+	os << item.StreetAddress << '\n';
 
 	return os;
 }

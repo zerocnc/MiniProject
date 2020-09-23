@@ -29,7 +29,7 @@ public:
 
 private:
 	Person HouseOwner;
-	HouseAddress HouseOwnerAddress;
+	StreetAddress HouseOwnerAddress;
 	float HousePrice;
 	HouseDescription HomeDesription;
 	

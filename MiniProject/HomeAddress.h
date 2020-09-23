@@ -1,7 +1,9 @@
 #pragma once
 
+#include <iostream>
+
 class HouseAddress {
 public:
-	std::string HomeAddress;
+	std::string StreetAddress;
 private:
 };

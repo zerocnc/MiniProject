@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <ostream>
 #include <fstream>
 #include <string>
 
@@ -16,7 +17,6 @@ private:
 std::istream& operator>>(std::istream& is, StreetAddress& item)
 {
 	std::getline(is, item.HouseStreetAddress);
-	//is >> item.HouseStreetAddress;
 
 	return is;
 }

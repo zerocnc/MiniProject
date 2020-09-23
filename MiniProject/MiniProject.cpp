@@ -9,19 +9,12 @@
 enum CommandType {ADD, DELETE, PRINT_ONE, PRINT_ALL, QUIT };
 
 void FileToList(UnsortedType<HouseListing>&, std::ifstream&);
-
 void BSTToFile(TreeType<HouseListing>);
-
 void ConvertListToBST(UnsortedType<HouseListing>&, TreeType<HouseListing>&);
-
 void AddHouse(TreeType<HouseListing>&);
-
 void DeleteHouse(TreeType<HouseListing>&);
-
 void PrintHouse(TreeType<HouseListing>&);
-
 void PrintOwners(TreeType<HouseListing>&);
-
 void GetCommand(CommandType&);
 
 int main()
@@ -30,8 +23,9 @@ int main()
 	std::ofstream masterOut;
 	CommandType command;
 
-	// List
+	// List Data Structure
 	UnsortedType<HouseListing> houseList;
+
 	// BST
 	TreeType<HouseListing> houseBST;
 

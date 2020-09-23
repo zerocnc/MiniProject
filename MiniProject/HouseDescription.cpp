@@ -22,7 +22,7 @@ std::istream& operator>>(std::istream& is, HouseDescription& item)
 std::ostream& operator<<(std::ostream& os, HouseDescription item)
 {
 	os << "Sqaure Feet:" << item.SQ_Feet << "sq. ft." << std::endl;
-	os <<"Bedrooms: " << item.BedRoom;
+	os << "Bedrooms: " << item.BedRoom;
 
 	return os;
 }

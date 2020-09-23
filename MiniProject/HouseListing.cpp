@@ -8,7 +8,7 @@ bool HouseListing::operator<( HouseListing otherOwner) const
 {
 	int resultLastName = 0;
 
-	resultLastName = std::strcmp(HouseOwner.LastName.c_str(), otherOwner.HouseOwner.LastName.c_str());
+	resultLastName = std::strcmp(HouseOwner.FirstName.c_str(), otherOwner.HouseOwner.LastName.c_str());
 
 	if ( resultLastName < 0 )
 	{
