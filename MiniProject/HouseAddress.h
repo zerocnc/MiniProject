@@ -6,6 +6,10 @@
 
 class StreetAddress {
 public:
+
+	StreetAddress();
+	~HouseAddress();
+
 	std::string HouseStreetAddress;
 
 	friend std::istream& operator>>(std::istream& is, StreetAddress& item);

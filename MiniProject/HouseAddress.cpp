@@ -3,7 +3,11 @@
 #include "HomeAddress.h"
 #include <string>
 
-HouseAddress::HouseAddress()
+StreetAddress::StreetAddress() {
+
+}
+
+StreetAddress::StreetAddress()
 {
 	StreetAddress.clear();
 

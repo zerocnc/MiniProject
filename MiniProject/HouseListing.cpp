@@ -53,7 +53,7 @@ HouseListing::HouseListing()
 	this->HomeDesription.SQ_Feet = 0;
 	this->HouseOwner.FirstName.clear();
 	this->HouseOwner.LastName.clear();
-	this->HouseOwnerAddress.HouseHouseAddress.clear();
+	this->HouseOwnerAddress.HouseStreetAddress.clear();
 
 	HousePrice = 0;
 }
@@ -88,7 +88,7 @@ void HouseListing::GetFromFile(std::ifstream& file)
 	file >> this->HouseOwner.FirstName;
 	file >> this->HouseOwner.LastName;
 	file.ignore();
-	std::getline( file, this->HouseOwnerAddress.HouseHouseAddress);
+	std::getline( file, this->HouseOwnerAddress.HouseStreetAddress);
 	file >> HousePrice >> this->HomeDesription.SQ_Feet >> this->HomeDesription.BedRoom;
 
 	return;
@@ -98,7 +98,7 @@ void HouseListing::WriteToFile(std::ofstream& file) const
 {
 	file << this->HouseOwner.FirstName;
 	file << this->HouseOwner.LastName << "\n";
-	file << " " << this->HouseOwnerAddress.HouseHouseAddress << "\n";
+	file << " " << this->HouseOwnerAddress.HouseStreetAddress << "\n";
 	file << HousePrice << this->HomeDesription.SQ_Feet << this->HomeDesription.BedRoom;
 
 	return;
@@ -113,7 +113,7 @@ void HouseListing::GetFromUser()
 	std::getline(std::cin, HouseOwner.FirstName);
 
 	std::cout << "Enter the home address; press enter." << std::endl;
-	std::getline(std::cin, HouseOwnerAddress.HouseHouseAddress);
+	std::getline(std::cin, HouseOwnerAddress.HouseStreetAddress);
 
 	std::cout << "Enter price, square feet, number of bedrooms; separated by a space, then press enter" << std::endl;
 	std::cin >> HousePrice >> this->HomeDesription.SQ_Feet >> this->HomeDesription.BedRoom;

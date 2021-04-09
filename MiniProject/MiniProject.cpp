@@ -6,7 +6,7 @@
 #include "BinarySearchTree.h"
 
 // Each constant represents a task.
-enum CommandType {ADD, DELETE, PRINT_ONE, PRINT_ALL, QUIT };
+enum class CommandType {ADD, DELETE, PRINT_ONE, PRINT_ALL, QUIT };
 
 void FileToList(UnsortedType<HouseListing>&, std::ifstream&);
 void BSTToFile(TreeType<HouseListing>);
@@ -21,7 +21,7 @@ int main()
 {
 	std::ifstream masterIn;
 	std::ofstream masterOut;
-	CommandType command;
+	CommandType cmd;
 
 	// List Data Structure
 	UnsortedType<HouseListing> houseList;
@@ -29,31 +29,30 @@ int main()
 	// BST
 	TreeType<HouseListing> houseBST;
 
-
 	FileToList(houseList, masterIn);
 	ConvertListToBST(houseList, houseBST);
 
 	HouseListing myItem;
 
-	GetCommand(command);
+	GetCommand(cmd);
 
-	while (command != QUIT)
+	while (cmd != CommandType::QUIT)
 	{
-		switch (command)
+		switch (cmd)
 		{
-		case ADD:	AddHouse(houseBST);
+		case CommandType::ADD:	AddHouse(houseBST);
 			break;
-		case DELETE: DeleteHouse(houseBST);
+		case CommandType::DELETE: DeleteHouse(houseBST);
 			break;
-		case PRINT_ONE: PrintHouse(houseBST);
+		case CommandType::PRINT_ONE: PrintHouse(houseBST);
 			break;
-		case PRINT_ALL: PrintOwners(houseBST);
+		case CommandType::PRINT_ALL: PrintOwners(houseBST);
 			break;
 		default:
 			std::cout << "Invalid command option: enum! CONTACT SUPPORT!" << std::endl;
 			break;
 		}
-		GetCommand(command);
+		GetCommand(cmd);
 	}
 
 	//BSTToFile(houseBST);
@@ -188,15 +187,15 @@ void GetCommand(CommandType& command)
 
 		switch (letter)
 		{
-		case 'A': command = ADD;
+		case 'A': command = CommandType::ADD;
 			break;
-		case 'D': command = DELETE;
+		case 'D': command = CommandType::DELETE;
 			break;
-		case 'P': command = PRINT_ONE;
+		case 'P': command = CommandType::PRINT_ONE;
 			break;
-		case 'L': command = PRINT_ALL;
+		case 'L': command = CommandType::PRINT_ALL;
 			break;
-		case 'Q': command = QUIT;
+		case 'Q': command = CommandType::QUIT;
 			break;
 		default:
 			std::cout << "Letter entered is not one of the specified uppercase commands. " << std::endl;

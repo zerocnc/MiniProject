@@ -15,6 +15,9 @@ public:
 	friend std::istream& operator>>(std::istream& is, Person& item);
 	friend std::ostream& operator<<(std::ostream& os, Person item);
 
+	Person();
+	~Person();
+
 private:
 
 };
