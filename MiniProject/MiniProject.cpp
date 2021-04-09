@@ -55,6 +55,8 @@ int main()
 		GetCommand(cmd);
 	}
 
+	//BSTToFile(houseBst, masterOut);
+
 	//BSTToFile(houseBST);
 
 	return 0;

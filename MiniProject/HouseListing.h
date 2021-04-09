@@ -1,10 +1,6 @@
 #pragma once
 #include <fstream>
 
-#include "Person.h"
-#include "HouseAddress.h"
-#include "HouseDescription.h"
-
 class HouseListing
 {
 public:
@@ -28,9 +24,11 @@ public:
 	// Overload <,>,== later for BST usage
 
 private:
-	Person HouseOwner;
-	StreetAddress HouseOwnerAddress;
+	std::string FirstName;
+	std::string LastName;
+	std::string HouseAddress;
 	float HousePrice;
-	HouseDescription HomeDesription;
-	
+	int SquareFeet;
+	int BedRooms;
+
 };

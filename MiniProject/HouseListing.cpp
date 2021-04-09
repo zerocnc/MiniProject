@@ -8,7 +8,7 @@ bool HouseListing::operator<( HouseListing otherOwner) const
 {
 	int resultLastName = 0;
 
-	resultLastName = std::strcmp(HouseOwner.FirstName.c_str(), otherOwner.HouseOwner.LastName.c_str());
+	resultLastName = std::strcmp(FirstName.c_str(), otherOwner.LastName.c_str());
 
 	if ( resultLastName < 0 )
 	{
@@ -22,7 +22,7 @@ bool HouseListing::operator>(HouseListing otherOwner) const
 {
 	int resultLastName = 0;
 
-	resultLastName = std::strcmp(HouseOwner.LastName.c_str(), otherOwner.HouseOwner.LastName.c_str());
+	resultLastName = std::strcmp(LastName.c_str(), otherOwner.LastName.c_str());
 
 	if (resultLastName > 0)
 	{
@@ -36,8 +36,8 @@ bool HouseListing::operator==(HouseListing otherOwner) const
 	int resultLastName = 0;
 	int resultFirstName = 0;
 
-	resultLastName = std::strcmp(HouseOwner.LastName.c_str(), otherOwner.HouseOwner.LastName.c_str());
-	resultFirstName = std::strcmp(HouseOwner.FirstName.c_str(), otherOwner.HouseOwner.FirstName.c_str());
+	resultLastName = std::strcmp(LastName.c_str(), otherOwner.LastName.c_str());
+	resultFirstName = std::strcmp(FirstName.c_str(), otherOwner.FirstName.c_str());
 
 	if ( resultLastName == 0 )
 	{
@@ -47,15 +47,15 @@ bool HouseListing::operator==(HouseListing otherOwner) const
 		return false;
 }
 
+/* Constructor */
 HouseListing::HouseListing()
 {
-	this->HomeDesription.BedRoom = 0;
-	this->HomeDesription.SQ_Feet = 0;
-	this->HouseOwner.FirstName.clear();
-	this->HouseOwner.LastName.clear();
-	this->HouseOwnerAddress.HouseStreetAddress.clear();
-
-	HousePrice = 0;
+	FirstName = "";
+	LastName = "";
+	HouseAddress = "";
+	HousePrice = 0.0;
+	SquareFeet = 0;
+	BedRooms = 0;
 }
 
 HouseListing::~HouseListing()
@@ -65,41 +65,48 @@ HouseListing::~HouseListing()
 
 std::istream& operator>>(std::istream& is, HouseListing& item)
 {
-	is >> item.HouseOwner;
-	is >> item.HouseOwnerAddress;
+	is >> item.FirstName;
+	is >> item.LastName;
+	is >> item.HouseAddress;
 	is >> item.HousePrice;
-	is >> item.HomeDesription;
+	is >> item.SquareFeet;
+	is >> item.BedRooms;
 
 	return is;
 }
 
 std::ostream& operator<<(std::ostream& os, HouseListing item) {
 
-	os << item.HouseOwner;
-	os << item.HouseOwnerAddress;
-	os << "Price: $" << std::fixed << std::setprecision(2) << std::setfill('0') << item.HousePrice << std::endl;
-	os << item.HomeDesription;
+	os << item.FirstName;
+	os << item.LastName;
+	os << item.HouseAddress;
+	os << item.HousePrice;
+	os << item.SquareFeet;
+	os << item.BedRooms;
 
 	return os;
 }
 
 void HouseListing::GetFromFile(std::ifstream& file)
 {
-	file >> this->HouseOwner.FirstName;
-	file >> this->HouseOwner.LastName;
-	file.ignore();
-	std::getline( file, this->HouseOwnerAddress.HouseStreetAddress);
-	file >> HousePrice >> this->HomeDesription.SQ_Feet >> this->HomeDesription.BedRoom;
+	file >> FirstName;
+	file >> LastName;
+	file >> HouseAddress;
+	file >> HousePrice;
+	file >> SquareFeet;
+	file >> BedRooms;
 
 	return;
 }
 
 void HouseListing::WriteToFile(std::ofstream& file) const
 {
-	file << this->HouseOwner.FirstName;
-	file << this->HouseOwner.LastName << "\n";
-	file << " " << this->HouseOwnerAddress.HouseStreetAddress << "\n";
-	file << HousePrice << this->HomeDesription.SQ_Feet << this->HomeDesription.BedRoom;
+	file << FirstName;
+	file << LastName;
+	file << HouseAddress;
+	file << HousePrice;
+	file << SquareFeet;
+	file << BedRooms;
 
 	return;
 }
@@ -107,40 +114,46 @@ void HouseListing::WriteToFile(std::ofstream& file) const
 void HouseListing::GetFromUser()
 {
 	std::cout << "Enter last name; press return." << std::endl;
-	std::getline(std::cin, HouseOwner.LastName);
+	std::getline(std::cin, LastName);
 
 	std::cout << "Enter the first name; press enter." << std::endl;
-	std::getline(std::cin, HouseOwner.FirstName);
+	std::getline(std::cin, FirstName);
 
 	std::cout << "Enter the home address; press enter." << std::endl;
-	std::getline(std::cin, HouseOwnerAddress.HouseStreetAddress);
+	std::getline(std::cin, HouseAddress);
 
-	std::cout << "Enter price, square feet, number of bedrooms; separated by a space, then press enter" << std::endl;
-	std::cin >> HousePrice >> this->HomeDesription.SQ_Feet >> this->HomeDesription.BedRoom;
+	std::cout << "Enter house price." << std::endl;
+	std::cin >> HousePrice;
+
+	std::cout << "Enter the house square feet." << std::endl;
+	std::cin >> SquareFeet;
+
+	std::cout << "Enter the number of bed rooms." << std::endl;
+	std::cin >> BedRooms;
 
 	return;
 }
 
 void HouseListing::PrintHouseToScreen() const
 {
-	std::cout << this->HouseOwner.FirstName << ' ';
-	std::cout << this->HouseOwner.LastName << '\n';
-	std::cout << this->HouseOwnerAddress;
-	std::cout << "Price: $" << std::fixed << std::setprecision(2) << std::setfill('0') << this->HousePrice << std::endl;
-	std::cout << "Total Square Feet: " << this->HomeDesription.SQ_Feet << std::endl;
-	std::cout << "Number of Baths: " << this->HomeDesription.BedRoom << std::endl;
+	std::cout << FirstName << ' ';
+	std::cout << LastName << '\n';
+	std::cout << HouseAddress;
+	std::cout << "Price: $" << std::fixed << std::setprecision(2) << std::setfill('0') << HousePrice << std::endl;
+	std::cout << "Total Square Feet: " << SquareFeet << std::endl;
+	std::cout << "Number of Bed Rooms: " << BedRooms << std::endl;
 }
 
 void HouseListing::GetKeyNameOnlyFromUser()
 {
 	std::cout << std::endl;
 	std::cout << "Enter last name; press return." << std::endl;
-	std::getline(std::cin, this->HouseOwner.LastName);
+	std::getline(std::cin, LastName);
 
 }
 
 void HouseListing::PrintNameToScreen() const
 {
-	std::cout << this->HouseOwner.FirstName << " " 
-			  << this->HouseOwner.LastName << std::endl;
+	std::cout << FirstName << " " 
+			  << LastName << std::endl;
 }
